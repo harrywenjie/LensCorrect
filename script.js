@@ -29,8 +29,8 @@ function correctDistortion() {
     
     let sliderValue = document.getElementById('slider').value;
     let distortionStrength = (50 - sliderValue) / 50;  // 
-    let k1 = distortionStrength * 0.5;  // 滑杆力量减少到50%, 100%貌似效果太强
-    let k2 = distortionStrength * 0.5;  // 滑杆力量减少到50%
+    let k1 = distortionStrength * 1.4;  // 滑杆力量可调系数
+    let k2 = distortionStrength * 1.4;  
     let D = cv.matFromArray(1, 5, cv.CV_64F, [k1, k2, 0, 0, 0]);
     let f = (canvas.width + canvas.height) / 2;
     let cx = canvas.width / 2;

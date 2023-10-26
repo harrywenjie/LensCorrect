@@ -9,13 +9,21 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin: 0; /* Remove default margin */
+        height: 100vh; /* Make body occupy the full viewport height */
+        box-sizing: border-box; /* Include padding and border in element's total width and height */
     }
     #canvas-container {
         text-align: center;
         margin-bottom: 20px;  /* Optional: Adds some space below the canvas */
+        height: 70%; /* Set to 50% of the parent's height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%; /* Make it span the full width */
     }
     #canvas {
-        height: 50%;
+        max-height: 100%; /* Ensure it doesn't exceed the container's height */
         display: block;  /* Ensures the canvas is centered within the container */
         margin: auto;
     }
@@ -24,6 +32,16 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+    }
+    .slider-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 10px 0;
+    }
+    .slider-icon {
+        margin: 0 10px; 
     }
 </style>
 </head>
@@ -35,7 +53,11 @@
 
 <div id="controls"></div>
     <input type="file" id="inputImage" accept="image/*" onchange="loadImage()" />
-    <input type="range" id="slider" min="0" max="100" value="50" oninput="correctDistortion()" />
+    <div class="slider-container">
+        <img src="left-icon.png" alt="Left Icon" class="slider-icon" />
+        <input type="range" id="slider" min="0" max="100" value="50" oninput="correctDistortion()" />
+        <img src="right-icon.png" alt="Right Icon" class="slider-icon" />
+    </div>
     <button onclick="saveImage()">Save Corrected Image</button>
 </div>
 
