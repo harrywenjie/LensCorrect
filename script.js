@@ -41,11 +41,11 @@ function correctDistortion() {
     
     let sliderValue = document.getElementById('slider').value;
     let distortionStrength = (50 - sliderValue) / 50;  // 
-    let k1 = distortionStrength * 1.4;  // 滑杆力量可调系数
+    let k1 = distortionStrength * 1.4;  // 滑杆力量可调系数, 暂定1.4
     let k2 = distortionStrength * 1.4;  
     let D = cv.matFromArray(1, 5, cv.CV_64F, [k1, k2, 0, 0, 0]);
     // 如果拿不到真实的镜头焦距, 那就只能按图的大小瞎算一个
-    // let f = (canvas.width + canvas.height) / 2;
+    // let f_pixels = (canvas.width + canvas.height) / 2;
     let cx = canvas.width / 2;
     let cy = canvas.height / 2;
     let focalLengthSlider = document.getElementById('focalLengthSlider');
