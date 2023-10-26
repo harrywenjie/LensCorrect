@@ -51,10 +51,16 @@
     <canvas id="canvas"></canvas>
 </div>
 
-<div id="controls"></div>
+<div id="controls">
     <input type="file" id="inputImage" accept="image/*" onchange="loadImage()" />
     <div class="slider-container">
-        <img src="left-icon.png" alt="Left Icon" class="slider-icon" />
+        <label for="focalLengthSlider">镜头焦距(按等效全画幅): </label>
+        <input type="range" id="focalLengthSlider" min="12" max="120" value="66" oninput="updateFocalLengthValue(); correctDistortion();" />
+        <span id="focalLengthValue">66mm</span>
+    </div>
+    <div class="slider-container">
+        <label for="slider">修正强度: </label>
+        <img src="left-icon.png" alt="Left Icon" class="slider-icon" />        
         <input type="range" id="slider" min="0" max="100" value="50" oninput="correctDistortion()" />
         <img src="right-icon.png" alt="Right Icon" class="slider-icon" />
     </div>

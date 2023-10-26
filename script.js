@@ -19,6 +19,18 @@ function loadImage() {
     };
 }
 
+function updateFocalLengthValue() {
+    let focalLengthSlider = document.getElementById('focalLengthSlider');
+    let focalLengthValue = document.getElementById('focalLengthValue');
+    focalLengthValue.textContent = focalLengthSlider.value + 'mm';
+}
+
+
+
+function convertFocalLengthToPixels(f_mm, sensorSize_mm, imageSize_pixels) {
+    return (f_mm / sensorSize_mm) * imageSize_pixels;
+}
+
 function correctDistortion() {
     if (!originalImage) return;  // 如果没有加载图片就返回
 
@@ -32,10 +44,16 @@ function correctDistortion() {
     let k1 = distortionStrength * 1.4;  // 滑杆力量可调系数
     let k2 = distortionStrength * 1.4;  
     let D = cv.matFromArray(1, 5, cv.CV_64F, [k1, k2, 0, 0, 0]);
-    let f = (canvas.width + canvas.height) / 2;
+    // 如果拿不到真实的镜头焦距, 那就只能按图的大小瞎算一个
+    // let f = (canvas.width + canvas.height) / 2;
     let cx = canvas.width / 2;
     let cy = canvas.height / 2;
-    let K = cv.matFromArray(3, 3, cv.CV_64F, [f, 0, cx, 0, f, cy, 0, 0, 1]);
+    let focalLengthSlider = document.getElementById('focalLengthSlider');
+    let f_mm = parseFloat(focalLengthSlider.value);
+    let sensorWidth_mm = 36;
+    let f_pixels = convertFocalLengthToPixels(f_mm, sensorWidth_mm, canvas.width);
+    let K = cv.matFromArray(3, 3, cv.CV_64F, [f_pixels, 0, cx, 0, f_pixels, cy, 0, 0, 1]);
+
 
     cv.undistort(src, dst, K, D);
     cv.imshow(canvas, dst);
